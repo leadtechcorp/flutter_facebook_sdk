@@ -207,7 +207,8 @@ public class SwiftFlutterFacebookSdkPlugin: NSObject, FlutterPlugin, FlutterStre
             }
             
         case "activateApp":
-            AppEvents.activateApp()
+            // TODO: Fix when issue fixed: https://github.com/facebook/facebook-ios-sdk/issues/1782
+            AppEvents.singleton.activateApp()
             result(true)
         case "logCompleteRegistration":
             guard let args = call.arguments else {
@@ -287,10 +288,11 @@ public class SwiftFlutterFacebookSdkPlugin: NSObject, FlutterPlugin, FlutterStre
                 result(true)
                 return
             }
-            
+        case "getAnonymousId":
+            result(AppEvents.anonymousID)
+            return
         default:
             result(FlutterMethodNotImplemented)
         }
-        
     }
 }

@@ -199,4 +199,10 @@ class FlutterFacebookSdk {
         .invokeMethod("setAdvertiserTracking", {"enabled": isEnabled});
     return result;
   }
+
+  Future<String> getAnonymousId() async {
+    final String result = await _channel.invokeMethod("getAnonymousId");
+
+    return result;
+  }
 }
