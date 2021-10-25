@@ -40,7 +40,6 @@ public class SwiftFlutterFacebookSdkPlugin: NSObject, FlutterPlugin, FlutterStre
     
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable : Any] = [:]) -> Bool {
         
-        Settings.shared.isAdvertiserTrackingEnabled = false
         let launchOptionsForFacebook = launchOptions as? [UIApplication.LaunchOptionsKey: Any]
         ApplicationDelegate.shared.application(
             application,
