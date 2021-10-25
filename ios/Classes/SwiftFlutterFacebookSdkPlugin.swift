@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import FBSDKCoreKit
+import FBAudienceNetwork
 
 let PLATFORM_CHANNEL = "flutter_facebook_sdk/methodChannel"
 let EVENTS_CHANNEL = "flutter_facebook_sdk/eventChannel"
@@ -39,7 +40,7 @@ public class SwiftFlutterFacebookSdkPlugin: NSObject, FlutterPlugin, FlutterStre
     
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable : Any] = [:]) -> Bool {
         
-        Settings.setAdvertiserTrackingEnabled(false)
+        Settings.shared.isAdvertiserTrackingEnabled = false
         let launchOptionsForFacebook = launchOptions as? [UIApplication.LaunchOptionsKey: Any]
         ApplicationDelegate.shared.application(
             application,
@@ -208,7 +209,7 @@ public class SwiftFlutterFacebookSdkPlugin: NSObject, FlutterPlugin, FlutterStre
             
         case "activateApp":
             // TODO: Fix when issue fixed: https://github.com/facebook/facebook-ios-sdk/issues/1782
-            AppEvents.singleton.activateApp()
+            AppEvents.shared.activateApp()
             result(true)
         case "logCompleteRegistration":
             guard let args = call.arguments else {
@@ -274,7 +275,9 @@ public class SwiftFlutterFacebookSdkPlugin: NSObject, FlutterPlugin, FlutterStre
             }
             if  let myArgs = args as? [String: Any],
                 let enabled = myArgs["enabled"] as? Bool{
-                Settings.setAdvertiserTrackingEnabled(enabled)
+                Settings.shared.isAdvertiserTrackingEnabled = enabled
+                Settings.shared.isAdvertiserIDCollectionEnabled = enabled
+
                 result(true)
                 return
             }
